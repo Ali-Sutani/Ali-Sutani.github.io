@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<title>SeamlessMD</title>
+<link rel="stylesheet" href="table_style.css">
+</head>
+<body>
+
+<table align="center">
+	<caption>Patient Information</caption>
+	<tr> <th>Name of patient                    <td id="name">
+	<tr> <th>Organization name                  <td id="organization">
+	<tr> <th>Gender                             <td id="gender">
+	<tr> <th>Number of conditions               <td id="num_conditions">
+	<tr> <th>List of all conditions             <td id="conditions">
+</table>
+
+<script>
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+	if (this.readyState == 4 && this.status == 200) {
+		var myObj = JSON.parse(this.responseText),i,z = 0,x="";
+		for (i in myObj.conditions) {
+			x += "<li>" + myObj.conditions[i] + "</li>";
+		}
+		for (y in myObj.conditions) {
+			var z = z+1;
+		}
+		document.getElementById("name").innerHTML += myObj.name.given + " " +  myObj.name.family 
+		document.getElementById("organization").innerHTML += myObj.managingOrganization.display 
+		document.getElementById("gender").innerHTML += myObj.gender 
+		document.getElementById("num_conditions").innerHTML += z
+		document.getElementById("conditions").innerHTML += "<ul>" + x + "</ul>";
+	}
+};
+xmlhttp.open("GET", "patient_v2.json", true);
+xmlhttp.send();
+</script>
+
+</body>
+</html>
